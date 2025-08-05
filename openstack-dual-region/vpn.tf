@@ -1,5 +1,10 @@
 # "Left" region
 
+resource "time_sleep" "router_delay_left" {
+  depends_on = [openstack_networking_router_v2.router]
+  create_duration = "30s"
+}
+
 resource "openstack_vpnaas_ike_policy_v2" "ike_policy_left" {
   name = var.ike_policy_name
 }
@@ -12,6 +17,7 @@ resource "openstack_vpnaas_service_v2" "vpn_service_left" {
   name = var.vpn_service_name
   router_id = openstack_networking_router_v2.router.id
   admin_state_up = "true"
+  depends_on = [time_sleep.router_delay_left]
 }
 
 resource "openstack_vpnaas_endpoint_group_v2" "epg_subnet_left" {
@@ -41,6 +47,11 @@ resource "openstack_vpnaas_site_connection_v2" "conn_left" {
 
 # "Right" region
 
+resource "time_sleep" "router_delay_right" {
+  depends_on = [openstack_networking_router_v2.router_right]
+  create_duration = "30s"
+}
+
 resource "openstack_vpnaas_ike_policy_v2" "ike_policy_right" {
   name = var.ike_policy_name
   provider = openstack.right
@@ -55,6 +66,7 @@ resource "openstack_vpnaas_service_v2" "vpn_service_right" {
   name = var.vpn_service_name
   router_id = openstack_networking_router_v2.router_right.id
   admin_state_up = "true"
+  depends_on = [time_sleep.router_delay_right]
   provider = openstack.right
 }
 
@@ -83,5 +95,5 @@ resource "openstack_vpnaas_site_connection_v2" "conn_right" {
   local_ep_group_id = openstack_vpnaas_endpoint_group_v2.epg_subnet_right.id
   peer_ep_group_id  = openstack_vpnaas_endpoint_group_v2.epg_cidr_left.id
   provider = openstack.right
-  depends_on  = [openstack_networking_router_interface_v2.router_interface_ipv4_right]
+  depends_on = [openstack_networking_router_interface_v2.router_interface_ipv4_right]
 }
