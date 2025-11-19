@@ -95,6 +95,7 @@ resource "openstack_compute_instance_v2" "instance" {
   flavor_name = var.flavor
   user_data = "${file("config.yaml")}"
   key_pair = openstack_compute_keypair_v2.keypair.name
+  config_drive = true
   network {
     port = openstack_networking_port_v2.instance_port.id
   }
