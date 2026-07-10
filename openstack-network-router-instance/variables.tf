@@ -48,7 +48,7 @@ variable ipv6_mode {
 
 variable "image" {
   type = string
-  default = "Ubuntu 22.04 Jammy Jellyfish x86_64"
+  default = "Ubuntu 24.04 Noble Numbat x86_64"
 }
 
 variable "flavor" {

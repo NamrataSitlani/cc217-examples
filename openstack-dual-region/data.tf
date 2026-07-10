@@ -7,11 +7,11 @@ data "openstack_networking_network_v2" "external_network_right" {
   provider = openstack.right
 }
 
-data "openstack_images_image_v2" "ubuntu_jammy" {
+data "openstack_images_image_v2" "ubuntu_noble" {
   name = var.image
 }
 
-data "openstack_images_image_v2" "ubuntu_jammy_right" {
+data "openstack_images_image_v2" "ubuntu_noble_right" {
   name = var.image
   provider = openstack.right
 }

@@ -102,7 +102,7 @@ resource "openstack_compute_instance_v2" "instance" {
     port = openstack_networking_port_v2.instance_port.id
   }
   block_device  {
-    uuid = data.openstack_images_image_v2.ubuntu_jammy.id
+    uuid = data.openstack_images_image_v2.ubuntu_noble.id
     source_type = "image"
     destination_type = "volume"
     boot_index = 0
@@ -237,7 +237,7 @@ resource "openstack_compute_instance_v2" "instance_right" {
   }
   provider = openstack.right
   block_device  {
-    uuid = data.openstack_images_image_v2.ubuntu_jammy_right.id
+    uuid = data.openstack_images_image_v2.ubuntu_noble_right.id
     source_type = "image"
     destination_type = "volume"
     boot_index = 0
